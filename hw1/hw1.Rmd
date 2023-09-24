@@ -8,6 +8,9 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
 ---
+
+20/20. Good Job Ashley
+
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
 **Due date:** September 21 beginning of class.
@@ -97,11 +100,19 @@ a. Write a function named `get_fibonacci` that returns the n'th value in the [fi
 get_fibonnaci <- function(n) {
   if(n==1){
     return(0)
-  } else if(n==2){
-    return(1)
-      
-  } else {
-    return(get_fibonnaci(n-1)+get_fibonnaci(n-2))}
+  } 
+  
+  else if(n==2){
+    return(1)}
+  
+  else 
+    
+  {return(get_fibonnaci(n-1)+get_fibonnaci(n-2))}
+  
+  
+  }
+
+# Your function was missing a bracket. So I added it. 
 
 ```
 
