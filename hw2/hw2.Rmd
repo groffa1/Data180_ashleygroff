@@ -38,11 +38,11 @@ head(Cars93)
 a) Create a Frequency table and Relative Frequency table (latter uses percentages) for the variable `Type`. Make sure to round all digits to 3 digits.
 ```{r}
 table(Cars93$Type)
-table(Cars93$Type)/length(Cars93$Type)
+round(table(Cars93$Type)/length(Cars93$Type),3)
 ```
 b) Create a frequency bar graph for the variable `Type`. You can have count on the y axis.
 ```{r}
-barplot(table(Cars93$Type), xlab="Type", ylab="Frequency", cex.lab=1.2, col="blue")
+barplot(table(Cars93$Type), xlab="Type", ylab="Frequency", cex.axis=1.2, cex.lab=1.2, col=c("lightblue","pink", "red", "green4", "blue", "orange"))
 ```
 
 *	Your axes should be labeled and legible
@@ -62,6 +62,7 @@ pie(slices, labels=labels, main= "Pie Chart of Vehicle Type", cex=1.2, radius=1.
 
 d) What is the mode of the variable `Type`? Comment.
 
+#Midsize 
 
 ## Task 2 
 a) Create a histogram of the variable `Horsepower`.
@@ -93,7 +94,7 @@ a) What is the type of variable `Passengers`? (Categorical nominal/ordinal or Nu
 ```{r}
 hist(Cars93$Passengers, xlab= "Passenger", col="pink", cex.lab=1.2, cex.axis=1.2)
 ```
-#Numerical discrete. The axis shows that there is a type of car that exists that holds between 3-4 passengers and between 5-6 passengers, etc. which does not make sense. 
+#Numerical discrete. The axis shows that there is a type of car that exists that holds 3.5 passengers and 5.5 passengers, etc. which does not make sense. 
 
 b) Correct the problem in part (a) by creating a more appropriate visualization. Make sure to label your axes, place a title, choose a custom color as in the previous graphs. (Bonus: use factor() with levels option to display x axis values with no observations on the plot.)
 ```{r}
@@ -114,7 +115,7 @@ c) Find the mean and median of the variable `Length.` Do these answers meet your
 mean(Cars93$Length)
 median(Cars93$Length)
 ```
-#Yes- the mean and median are the same, which is necessary for a unimodal distribution
+#Yes- the mean and median are the same, which makes sense because the histogram is symmetrical. 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date.
 
 
