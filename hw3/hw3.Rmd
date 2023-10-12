@@ -42,9 +42,11 @@ Create a simple scatterplot using ggplot2 where x axis shows `EngineSize`, y axi
 ```{r}
 ggplot(Cars93, aes(x=EngineSize, y=MPG.city)) +
   geom_point(size=2, color= "blue", shape=19) +
+  xlim(1,6) +
+  ylim(NA,50) + 
     labs(title = "Scatterplot of MPG and Engine Size", subtitle= "Relationship between gas mileage and engine size of cars", caption= "Higher gas mileage seems to correlate with a smaller engine size, and decreases with increasing engine size")
 ```
-#x lim and y lim
+
 
 ## Task 2
 Recreate the scatterplot in Task 1. Add the following functionality:
@@ -53,6 +55,8 @@ Recreate the scatterplot in Task 1. Add the following functionality:
 ```{r}
 ggplot(Cars93, aes(x=EngineSize, y=MPG.city, color=Type)) +
   geom_point(size=2, shape=19) +
+  xlim(1,6) +
+  ylim(NA,50) + 
     labs(title = "Scatterplot of MPG and Engine Size", subtitle= "Relationship between gas mileage and engine size of cars", caption= "Higher gas mileage seems to correlate with a smaller engine size, and decreases with increasing engine size")
 ```
 
@@ -65,7 +69,10 @@ Recreate the scatterplot in Task 2. Add the following functionality:
 ```{r}
 ggplot(Cars93, aes(x=EngineSize, y=MPG.city)) +
   geom_point(size=2, color= "blue", shape=19) +
-  geom_smooth(se= FALSE, linetype="dashed", color="red")
+  geom_smooth(se= FALSE, linetype="dashed", color="red")+
+  xlim(1,6) +
+  ylim(NA,50) + 
+    labs(title = "Scatterplot of MPG and Engine Size", subtitle= "Relationship between gas mileage and engine size of cars", caption= "Higher gas mileage seems to correlate with a smaller engine size, and decreases with increasing engine size")
 ```
 
 ## Task 4
@@ -76,10 +83,11 @@ Create a barplot showing count of cars by `AirBags` using ggplot2.
 * Add a title, subtitle, x axis label, y axis label, and a caption using title, subtitle, caption options inside `+ labs()`.
 
 ```{r}
-ggplot(Cars93, aes(AirBags))+
-  geom_bar(fill="blue")
+ggplot(Cars93, aes(AirBags, fill=AirBags))+
+  geom_bar() +
+  labs(title="Barplot describing type of Airbags present", subtitle= "Count of type of Airbags present in cars from Cars93 data", caption="Driver only is the most common airbag type in cars from this data, followed by none, then Driver & Passenger")
 ```
-#add text
+
 
 ## Task 5
 Recreate the barplot in Task 4 for different car `Origin`, such that you create one barplot for each `Origin` category and display all on the same graph.
@@ -90,7 +98,8 @@ Recreate the barplot in Task 4 for different car `Origin`, such that you create 
 
 ```{r}
 ggplot(Cars93, aes(x=Origin, fill=AirBags))+
-  geom_bar(position='dodge')
+  geom_bar(position='dodge') +
+  labs(title="Barplot describing type of Airbags present", subtitle= "Count of type of Airbags present in cars from Cars93 data", caption="Driver only is the most common airbag type in cars from this data, followed by none, then Driver & Passenger")
 ```
 
 # Maps
