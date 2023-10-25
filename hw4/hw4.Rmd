@@ -69,6 +69,8 @@ records %>%
   group_by(track) %>%
   summarize(Mean_record_time=mean(time))
 ```
+#Mario Raceway
+
 # Question 5
 Let's get the year from the `date` column and save it as a variable named `year`. You can use the function `substr(date, 1, 4)` which grabs the first 4 digits in the `date` column. Use this expression in `mutate()` to create a `year` column. (Don't forget to save/overwrite the dataframe returned to the original one!)
 
@@ -91,7 +93,8 @@ records %>% group_by(year) %>%
   summarize(Average_record_time=mean(time)) %>%
   ggplot(aes(year,Average_record_time)) + geom_bar(stat='identity')
 ```
-#add comments
+#There is no clear trend over time. There is a decrease in average record time after 2019, however, data should be collected from 2022 and 2023 to see if this decrease continues or if there is another increase. 
+
 # Question 8
 Create two overlaid histograms by `type` on the same plot where each histogram shows the distribution of `time` for a given track `type`. Combine dplyr and ggplot2 to achieve this. How do record times compare between Single Lap and Three Lap tracks? Hint: use `records %>% dplyr functions %>% ggplot(., aes()) + type of ggplot plot` to combine dpylr with ggplot. Note that the dot inside `ggplot()` is a placeholder for `records`, as dplyr has already pulled `records` df at the beginning of the code (making it unnecessary to type it twice!)
 
@@ -101,6 +104,7 @@ Note: Set `alpha=.5` for transparency.
 records %>% select(time,type) %>% ggplot(., aes(x=time, fill=type))+ geom_histogram(alpha=0.5)
                       
 ```
+#Record times on single lap tracks are faster than the three lap tracks.
 
 # Question 9
 Three Lap time reports the total time spent finishing three laps in total, as opposed to finishing a single lap. Let's divide all time observations with `type=="Three Lap"` by 3 to check whether **per lap** performance declines across Three Lap vs. Single Lap. Generate a new variable named `time_per` which is the time spent per round, and create two overlaid histograms of `type_per` by `type`. Hint: Use `mutate()`, and inside `mutate()` use `ifelse()` function to conditionally replace rows: e.g.., `ifelse(type=="Three Lap",time/3,time)` which divides `time` by three only if `type=="Three Lap"`.
@@ -121,7 +125,7 @@ Lastly, compare the mean `time` by `system_played`. Do you observe a difference 
 ```{r}
 records %>% group_by(system_played) %>% summarize(mean_time=mean(time))
 ```
-#add comments
+#The NTSC system has a shorter mean time compared to the PAL system. It seems that the FPS of the systems affects the performance of the records set. 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date. (Well... the checkered flag emoji is now super relevant for this assignment!)
 
 
