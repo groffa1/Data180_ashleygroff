@@ -114,7 +114,7 @@ colnames(Ver_Euclidean)<-vertebrate[,1]
 row.names(Ver_Euclidean)<-vertebrate[,1]
 
 Ver_Euclidean_clust<- hclust(dist(Ver_Euclidean))
-plot(Ver_Euclidean_clust, lwd=3, main= "Clustered Dendrogram,Euclidean, complete linkage",sub="", xlab="Vertebrates", cex.lab=1.25, hang=-1)
+plot(Ver_Euclidean_clust, lwd=3, main= "Clustered Dendrogram, Euclidean, complete linkage",sub="", xlab="Vertebrates", cex.lab=1.25, hang=-1)
 
 ```
 
