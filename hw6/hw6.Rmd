@@ -30,7 +30,7 @@ head(Mammals_Milk)
 Use the `summary()` function to produce a summary of the variables (mean, median..) in the Mammals_Milk data frame.
 
 ```{r}
-
+summary(Mammals_Milk)
 ```
 
 To have comparable units, let's standardize values (aka get z-scores) of the five variables: Water, Protein, Fat, Lactose, and Ash using the scale function and store it as an object `Mammals_Milk_Std`. A 0 z-score means an observation is exactly on its mean; a negative value means it's smaller than mean; a larger number means it's larger than the mean. ([Here is a nice summary on z-scores](https://www.simplypsychology.org/z-score.html)). Use this standardized object when indicated in the next questions. 
@@ -50,18 +50,26 @@ Use hierarchical clustering (i.e. `hclust`) to cluster the animals based on the 
 *	Set the frame.plot argument to T to draw a box around the dendrograms
 
 ```{r}
-
+Mammal_euclidean <- as.matrix(dist(Mammals_Milk_Std))
+Mammal_euclidean_clust <-hclust(dist(Mammal_euclidean))
+plot(Mammal_euclidean_clust, main="Mammals Clustered by Std. Milk Composition, Euclidean Metric, Complete Linkage", sub="", xlab= "Mammals", lwd=3, cex.lab=1.25, hang=-1)
 ```
+#frame plot argument?
 
 # Question 3
 For k = 3 and k = 4, perform a k-means clustering of the mammals based on their standardized milk composition. Before clustering, set the seed to 125, which I already copied below for you at the beginning of the cell. This is for me to be able to perfectly replicate your potentially different clustering solution (it's a stochastic/random process remember>?) Set the nstart option to 100. Call the kmeans objects `MMilk_km_3` and `MMilk_km_4.` Append the clustering solutions (i.e. the cluster membership vectors) on the right side of the original data frame, naming the columns `km_3` and `km_4.` Use the arrange function to sort this table on the cluster membership columns, first for `km_3` and a second time for `km_4.` Print both sorted tables in your solutions here, one for the K = 3 solution sorting and a second one for the K = 4 cluster solution sorting.
 
 ```{r}
 set.seed(125)
+MMilk_km_3 <- kmeans(Mammals_Milk_Std, centers=3)
+MMilk_km_4 <- kmeans(Mammals_Milk_Std, centers=4)
 
-```
+mutate(Mammals_Milk_Std, km_3=MMilk_km_3, km_4=MMilk_km_4) %>%
+  select(Water, Protein, Fat, Lactose, Ash)
+ ```
 
-# Question 4
+#mutate 
+ # Question 4
 Use the `group_by` and `summarize` functions to provide tables summarizing the results of the two different cluster solutions (K = 3 and K = 4) above. Make one table for each of the clustering procedures. Include in the table the values
 
 *	`Count`: the group size
