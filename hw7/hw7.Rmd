@@ -33,14 +33,18 @@ Read the `news.csv` into R and create the object `news` using
 ```{r}
 #library(tidyverse)
 library(tm)
-news<-read.csv("news.csv",header=T)
+library(readr)
+news<-read.csv("Data180_ashleygroff/Data180_ashleygroff/hw7/news.csv", header=T)
+View(news)
 ```
 
 Read also the positive and negative word dictionaries, both found on Github. This will later come in handy:
 
 ```{r}
-posWords <- scan("positive-words.txt", character(0), sep = "\n")  # 2006 items
-negWords <- scan("negative-words.txt", character(0), sep = "\n")  # 4783 items
+posWords <- scan("Data180_ashleygroff/Data180_ashleygroff/hw7/positive-words.txt", character(0), sep = "\n")  # 2006 items
+
+negWords <- scan("Data180_ashleygroff/Data180_ashleygroff/hw7/negative-words.txt", character(0), sep = "\n")  # 4783 items
+
 head(posWords,15)
 head(negWords,15)
 ```
@@ -49,19 +53,24 @@ head(negWords,15)
 # Question 1
 First, check how many years of news data we have loaded in in R.
 ```{r}
+min(news$year)
+max(news$year)
 
+#18 years of news data
 ```
 
 # Question 2
 Store the headlines column in a vector of text named `charVector`. Print the first 6 entries in the vector.
 ```{r}
-
+charVector <- news$headline_text
+print(charVector[1:6])
 ```
 
 # Question 3
 Convert `charVector` into a vector source object named `wordVector` using the function `VectorSource()`. (See class notes on how to do this) Then convert `wordVector` into a corpus object named `wordCorpus` using the function `Corpus()`.
 ```{r}
-
+wordVector <- VectorSource(charVector)
+wordCorpus <- Corpus(wordVector)
 ```
 
 # Question 4
@@ -72,7 +81,10 @@ We are now ready to do some basic trimming on the text. Do the following on the 
 * Remove stopwords (e.g., the, a, at, etc.)
 
 ```{r}
-
+wordCorpus <- tm_map(wordCorpus, content_transformer(tolower))
+wordCorpus <- tm_map(wordCorpus, removePunctuation)
+wordCorpus <- tm_map(wordCorpus, removeNumbers)
+wordCorpus <- tm_map(wordCorpus, removeWords, stopwords("english"))
 ```
 
 # Question 5
