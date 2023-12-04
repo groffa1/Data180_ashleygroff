@@ -85,25 +85,34 @@ wordCorpus <- tm_map(wordCorpus, content_transformer(tolower))
 wordCorpus <- tm_map(wordCorpus, removePunctuation)
 wordCorpus <- tm_map(wordCorpus, removeNumbers)
 wordCorpus <- tm_map(wordCorpus, removeWords, stopwords("english"))
+
 ```
 
 # Question 5
 What is a term document matrix? Explain. Create a term document matrix from the news vector and store it as an object named `tdm` using the function `TermDocumentMatrix`.
 ```{r}
+tdm <- TermDocumentMatrix(wordCorpus)
 
+#A term document matrix is... 
 ```
 
 # Question 6
 Convert `tdm` into a matrix named `m`. Store the frequency of occurrence of each word in the news headlines in an object named `wordCounts`. Return the top 10 most frequent words. (Note: if you run into memory issues creating the matrix `m`, try using one of the computers in Tome.)
 ```{r}
-
+m<- as.matrix(tdm)
+wordCounts <- rowSums(m)
+wordCounts <- sort(wordCounts, decreasing=TRUE)
+head(wordCounts)
+totalWords <- sum(wordCounts)
 ```
 
 # Question 7
 Create a barplot of the words that showed up at least 50 times in the news headlines. Rotate the x axis labels by 90 degrees, and decrease the label font size by 25%.
 
 ```{r}
+barplot(wordCounts[1:50], cex.names=0.75)
 
+#how to rotate???
 ```
 
 
@@ -111,8 +120,20 @@ Create a barplot of the words that showed up at least 50 times in the news headl
 What is the percentage of positive words in the news headlines? What is the percentage of negative words? Make a barplot for each (for positive and negative words that showed up separately) showing the most frequent words for words that showed up at least 20 times. (Note: don't forget to get the total number of unique words that showed up in the data.)
 
 ```{r}
+matchedP <- match(names(wordCounts), posWords, nomatch = 0)
+matchedP <- wordCounts[matchedP != 0]
+barplot(matchedP,las=2,cex.names=0.75)
+sum(matchedP)/totalWords
+#0.0373 --> 37% are positive
 
+matchedN <- match(names(wordCounts), negWords, nomatch = 0)
+matchedN <-wordCounts[matchedN != 0]
+barplot(matchedN,las=2,cex.names=0.75)
+sum(matchedN)/totalWords
+
+#0.0777 --> 77.7% are negative
 ```
+***ask how to make it the words that show up at least 20 times
 
 Let's get the number of articles published in each year and month. Note that the chunk below creates two new variables `count` and `yearmonth`:
 
@@ -124,6 +145,9 @@ news <- news %>% group_by(year,month) %>% mutate(count=n(), yearmonth = paste(ye
 Using `ggplot2`, create a barplot for the frequency of articles released in each year and month. On the x axis, you should have year month, e.g., 2003/10, 2003/11, 2003/12, 2004/1, on the y-axis you should have the number of articles released in the data. Do you see a change in the number of articles released across years? (Hint: use `factor()` with `levels=` options specified when you call `aes(x=)` to have a proper chronological sorting on your x axis. Use `+theme(axis.text=element_text(size=4,angle=90)` to fit the dates on the x axis.)
 
 ```{r}
+ggplot(data=news, aes(x=yearmonth, y=count)) + geom_bar(stat="identity") + theme(axis.text=element_text(size=4,angle=90))
+
+#is this right? how to use factor and levels?
 ```
 
 Let's now practice working with `quanteda` and `corpus` packages. Install the packages first if you don't have them in your computer and load them in in R.
