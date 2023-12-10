@@ -85,3 +85,30 @@ hist(loan_default2$credit_age, col="purple", main="Histogram of Age in Months of
 Yes the shapes of the histograms confirm the skewness found in part b. 
 
 d.	How would your convert the “rep_education” column into numerical data? Name two ways. 
+
+This column can be converted into numerical data with either using [] method or the term frequency inverse document frequency method.
+
+The first method involves associating each word in the data with a number and listing them out that way. 
+
+In the term frequency inverse document frequency method , each word would be written out (removing repeats and meaningless words) and would represent columns. The frequency of each word is written in below each "word column" thus changing it to numeric data. 
+
+3. Data Visualization 
+a.	Plot a bar graph for the “Def_Ind” column and describe it.
+```{r}
+
+```
+
+b.	Plot a bar graph for the “rep_education" column and describe it. 
+```{r}
+
+``` 
+
+c.	Plot a histogram of the “rep_income” variable.
+```{r}
+
+```
+
+d.	Plot a boxplot of the “tot_balance” variable. Using the box plot report the five number summary of the variable? Are there any outliers for this variable? 
+```{r}
+
+```
