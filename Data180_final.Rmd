@@ -43,10 +43,45 @@ sapply(loan_default, function(x) sum(is.na(x)))
 Column "pct_card_over_50_uti" contains 1958 missing values (9.79% of total) and "rep_income" contains 1559 missing values (7.795% of total). 
 
 e. How do you think we should deal with missing values? 
-Missing values can be dealt with in a variety of ways. The easiest way would be to drop the missing values from the dataset
+Missing values can be dealt with in a variety of ways:  
+- Drop the missing values from the dataset
+- drop entire row/column where missing values are
+- replace the n/a values with something else
+- depending on type of data, could replace missing value with either the mean or the mode of that column/row
+- use the select function to create a subset of the original dataframe that does not include missing values 
 
-f.
-g. 
+f. With this data, would you fit a supervised or an unsupervised learning model? Why? 
+This data makes up a multivariable dataset with many different observations and it seems to lack a response variable used for prediction. So, I would fit a unsupervised learning model to conduct an exploratory analysis of the data. 
+
+g. For part 2 and 3 drop all rows of the data that contain missing values. Print the dimensions of the resulting data set that has no missing values.
 ```{r}
+loan_default2 <- select(loan_default, tot_balance, avg_bal_cards, credit_age, credit_age_good_account, credit_card_age, num_acc_30d_past_due_12_months, num_acc_30d_past_due_6_months, num_mortgage_currently_past_due, tot_amount_currently_past_due, num_inq_12_month, num_card_inq_24_month, num_card_12_month, num_auto_.36_month, uti_open_card, pct_over_50_uti,uti_max_credit_line,ind_XYZ, rep_education, Def_ind ) 
+
+dim(loan_default2)
 
 ```
+
+2. Data summary statistics 
+
+a.Find the summary statistics of the data set. You can use the summary function from dplyr. 
+```{r}
+summary(loan_default2)
+```
+
+b. Based on the mean, mode, and median, is “num_card_inq_24_month” bell shaped, left, right skewed? How about “tot_amount_currently_past_due”? “credit_age”? 
+"num_card_inq_24_month"- Mean=1.053, median=0, suggesting that this is right skewed, since the mean is greater than the median. 
+"tot_amount_currently_past_due"- Mean=352.5, median=0, suggesting this is right skewed since the mean is greater than the median. 
+“credit_age”- Mean= 280.7, median=280, suggesting this is bell shaped since the mean and the median are nearly equal. 
+
+c. Plot a histogram of the variables in b above. Do the shapes of the histograms confirm the skewness you found in b?
+
+```{r}
+hist(loan_default2$num_card_inq_24_month, col="lightblue", main= "Histogram of # Credit Card Inquiries in last 24 Months", xlab= "# Credit Card Inquiries")
+
+hist(loan_default2$tot_amount_currently_past_due, col="red", main= "Histogram of Total Amount Past Due Currently for All Credit Accounts", xlab="Total Amount Past Due")
+
+hist(loan_default2$credit_age, col="purple", main="Histogram of Age in Months of First Credit Product Obtained by the Applicant", xlab= "Age in Months")
+```
+Yes the shapes of the histograms confirm the skewness found in part b. 
+
+d.	How would your convert the “rep_education” column into numerical data? Name two ways. 
