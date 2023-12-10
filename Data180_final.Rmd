@@ -1,0 +1,52 @@
+---
+title: "Data180_final"
+output: html_document
+date: "2023-12-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Read in csv file 
+```{r}
+loan_default <- read.csv("loan_default_data_set.csv")
+```
+## R Markdown
+
+1. Data wrangling
+a. What is the dimension (shape) of the dataset?  How many rows and columns does the data set have?
+
+```{r}
+dim(loan_default)
+```
+This data set contains 20,000 rows and 21 columns
+
+
+b. Report the column names of the data set.
+```{r}
+colnames(loan_default)
+```
+
+c. Which types of data are there in the dataset? Numeric, categorical, ordinal?
+This dataset contains numerical and categorical data. 
+
+d. Which columns contain missing values and how much (what percent) of those columns are missing?
+```{r}
+sapply(loan_default, function(x) which(is.na(x)))
+sapply(loan_default, function(x) sum(is.na(x)))
+#percent missing pct_card_over_50_uti
+(1958/20000)*100= 9.79
+#percent missing rep_income
+(1559/20000)*100= 7.795
+```
+Column "pct_card_over_50_uti" contains 1958 missing values (9.79% of total) and "rep_income" contains 1559 missing values (7.795% of total). 
+
+e. How do you think we should deal with missing values? 
+Missing values can be dealt with in a variety of ways. The easiest way would be to drop the missing values from the dataset
+
+f.
+g. 
+```{r}
+
+```
