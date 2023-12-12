@@ -1,0 +1,125 @@
+---
+author: "Ashley Groff"
+title: "Data180_final"
+output: html_document
+date: "2023-12-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Read in csv file 
+```{r}
+loan_default <- read.csv("loan_default_data_set.csv")
+```
+## R Markdown
+
+1. Data wrangling
+a. What is the dimension (shape) of the dataset?  How many rows and columns does the data set have?
+
+```{r}
+dim(loan_default)
+```
+This data set contains 20,000 rows and 21 columns
+
+
+b. Report the column names of the data set.
+```{r}
+colnames(loan_default)
+```
+
+c. Which types of data are there in the dataset? Numeric, categorical, ordinal?
+This dataset contains numerical and categorical data. 
+
+d. Which columns contain missing values and how much (what percent) of those columns are missing?
+```{r}
+sapply(loan_default, function(x) which(is.na(x)))
+sapply(loan_default, function(x) sum(is.na(x)))
+#percent missing pct_card_over_50_uti
+(1958/20000)*100= 9.79
+#percent missing rep_income
+(1559/20000)*100= 7.795
+```
+Column "pct_card_over_50_uti" contains 1958 missing values (9.79% of total) and "rep_income" contains 1559 missing values (7.795% of total). 
+
+e. How do you think we should deal with missing values? 
+Missing values can be dealt with in a variety of ways:  
+- Drop the missing values from the dataset
+- drop entire row/column where missing values are
+- replace the n/a values with something else
+- depending on type of data, could replace missing value with either the mean or the mode of that column/row
+- use the select function to create a subset of the original dataframe that does not include missing values 
+
+f. With this data, would you fit a supervised or an unsupervised learning model? Why? 
+This data makes up a multivariable dataset with many different observations. There is one variable listed as a response variable and multiple variables listed as predictor variables. Since there is both a response and predictor variable present, a supervised learning model should be fit to this data. 
+
+g. For part 2 and 3 drop all rows of the data that contain missing values. Print the dimensions of the resulting data set that has no missing values.
+```{r}
+loan_default2 <-loan_default[!is.na(loan_default$rep_income), ]
+loan_default2 <- loan_default[!is.na(loan_default$pct_card_over_50_uti), ]
+dim(loan_default2)
+
+```
+
+2. Data summary statistics 
+
+a.Find the summary statistics of the data set. You can use the summary function from dplyr. 
+```{r}
+summary(loan_default2)
+```
+
+b. Based on the mean, mode, and median, is “num_card_inq_24_month” bell shaped, left, right skewed? How about “tot_amount_currently_past_due”? “credit_age”? 
+"num_card_inq_24_month"- Mean=1.047, median=0, suggesting that this is right skewed, since the mean is greater than the median. 
+"tot_amount_currently_past_due"- Mean=359.3, median=0, suggesting this is right skewed since the mean is greater than the median. 
+“credit_age”- Mean= 280.7, median=280, suggesting this is bell shaped/unimodal since the mean and median are nearly equal. 
+
+c. Plot a histogram of the variables in b above. Do the shapes of the histograms confirm the skewness you found in b?
+
+```{r}
+hist(loan_default2$num_card_inq_24_month, col="lightblue", main= "Histogram of # Credit Card Inquiries in last 24 Months", xlab= "# Credit Card Inquiries")
+
+hist(loan_default2$tot_amount_currently_past_due, col="red", main= "Histogram of Total Amount Past Due Currently for All Credit Accounts", xlab="Total Amount Past Due")
+
+hist(loan_default2$credit_age, col="purple", main="Histogram of Age in Months of First Credit Product Obtained by the Applicant", xlab= "Age in Months")
+```
+Yes the shapes of the histograms confirm the skewness found in part b. 
+
+d.	How would your convert the “rep_education” column into numerical data? Name two ways. 
+
+This column can be converted into numerical data using either the count vectorization method or the term frequency inverse document frequency method.
+
+The first method involves associating each word in the data with a number and listing them out that way, changing this column into numeric data. 
+
+In the term frequency inverse document frequency method , each word would be written out (removing repeats and meaningless words) and would represent columns. The frequency of each word is written in below each "word column" thus changing it to numeric data. 
+
+3. Data Visualization 
+a.	Plot a bar graph for the “Def_Ind” column and describe it.
+```{r}
+ggplot(loan_default2, aes(Def_ind)) + 
+  geom_bar() + labs(title="Barplot showing frequency of type of Indicator of Default", x= "Indicator of Default (0 or 1)")
+```
+This bar graph shows the count of different indicators of default. 1 represents an account defaulted after it was approved and opened with bank XYZ in the past 18 months and 0 represents an account that is not defaulted. It seems that in this data there are more accounts that were not defaulted compared to accounts that were defaulted. However, this graph is somewhat hard to read, as it suggests there is data that exists between 0-1, but it only exists as 0 OR 1.
+
+b.	Plot a bar graph for the “rep_education" column and describe it. 
+```{r}
+ ggplot(loan_default2, aes(rep_education, fill=rep_education)) +
+  geom_bar() +
+  labs(main="Barplot of frequency of education types", x= "Education type") +
+  guides(fill=guide_legend(title="Education Type"))
+
+``` 
+This bar graph shows that the education level that occurs most frequently in this data is a college education,followed by high school, graduate school, and then "other", which is any other degree than the ones already listed. 
+
+c.	Plot a histogram of the “rep_income” variable.
+```{r}
+hist(loan_default2$rep_income, main= "Histogram of Self-reported income", xlab="Self-reported income", col = "blue")
+
+```
+This histogram shows that the distribution of self-reported income is unimodal, with 150000-200000 being the most frequent range of income in this data. 
+
+d.	Plot a boxplot of the “tot_balance” variable. Using the box plot report the five number summary of the variable? Are there any outliers for this variable? 
+```{r}
+boxplot(loan_default2$tot_balance, horizontal = T, xlab= "Total available balance", cex.lab=1.2, cex.axis=1.2)
+```
+Approximate five number summary based off boxplot:0, 92000, 110000, 120000, 2000000[actual: 0, 92090, 107713,122889, 200000]. Based on the box plot, it seems that there are a number of outliers, as there are many observations above the upper boundary and below the lower boundary.
