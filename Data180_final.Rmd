@@ -4,7 +4,7 @@ title: "Data180_final"
 output: html_document
 date: "2023-12-10"
 ---
-
+39/40. Good job. 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -58,7 +58,7 @@ g. For part 2 and 3 drop all rows of the data that contain missing values. Print
 ```{r}
 loan_default2 <-loan_default[!is.na(loan_default$rep_income), ]
 loan_default2 <- loan_default[!is.na(loan_default$pct_card_over_50_uti), ]
-dim(loan_default2)
+dim(loan_default2) # These dimensions are not correct (-1)
 
 ```
 
